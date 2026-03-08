@@ -1,0 +1,67 @@
+---
+// src/components/Divider.astro
+// Uso: <Divider label="sobre mí" from="navy" to="navy-mid" />
+
+interface Props {
+    label:  string;
+    from?:  "navy" | "navy-mid" | "navy-dark";
+    to?:    "navy" | "navy-mid" | "navy-dark";
+}
+
+const { label, from = "navy", to = "navy-mid" } = Astro.props;
+
+const bgMap = {
+    "navy":      "#0A0F1E",
+    "navy-mid":  "#111827",
+    "navy-dark": "#0D1424",
+};
+
+const fromColor = bgMap[from];
+const toColor   = bgMap[to];
+---
+
+<div class="divider" style={`background: linear-gradient(to bottom, ${fromColor}, ${toColor})`}>
+    <div class="divider-inner">
+        <div class="divider-line"></div>
+        <span class="divider-text">✦ {label} ✦</span>
+        <div class="divider-line"></div>
+    </div>
+</div>
+
+<style>
+    .divider {
+        width: 100%;
+        padding: 0 2rem;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .divider-inner {
+        width: 100%;
+        max-width: 1100px;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .divider-line {
+        flex: 1;
+        height: 1px;
+        background: rgba(201,168,76,0.15);
+    }
+
+    .divider-text {
+        font-family: 'DM Mono', monospace;
+        font-size: 1rem;
+        letter-spacing: 0.25em;
+        color: rgba(201,168,76,0.4);
+        text-transform: uppercase;
+        white-space: nowrap;
+        transition: color 0.3s;
+    }
+
+    .divider:hover .divider-text { color: rgba(201,168,76,0.7); }
+    .divider:hover .divider-line  { background: rgba(201,168,76,0.25); }
+</style>

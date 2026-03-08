@@ -1,0 +1,57 @@
+---
+// src/components/SobreMi.astro
+const tags = ["Clean Code", "TDD", "Microservicios", "RESTful APIs", "DevOps"];
+const stack = ["Java 17 / 21", "Spring Boot 3.x", "Spring Security", "Hibernate / JPA", "Maven / Gradle"];
+---
+
+<section id="sobre-mi" class="bg-navy-mid py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+
+        <p class="mono text-xs tracking-widest text-gold uppercase mb-4" data-aos="fade-up">01 — Sobre mí</p>
+
+        <div class="grid md:grid-cols-[1fr_300px] gap-16 items-start">
+
+            <!-- Text -->
+            <div data-aos="fade-up" data-aos-delay="100">
+                <h2 class="text-4xl md:text-5xl font-semibold text-cream mb-8 leading-tight"
+                    class="font-display">
+                    Construyo software <em>que escala</em>
+                </h2>
+                <p class="text-gray text-base leading-relaxed mb-5">
+                    Soy un desarrollador backend apasionado por crear arquitecturas limpias y eficientes. Mi especialidad es el ecosistema Java/Spring, donde combino buenas prácticas con soluciones pragmáticas para resolver problemas reales de negocio.
+                </p>
+                <p class="text-gray text-base leading-relaxed mb-8">
+                    Me enfoco en escribir código mantenible, testeable y documentado. Creo firmemente que el software de calidad es aquel que otro desarrollador puede entender y extender sin fricción.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    {tags.map(tag => (
+                            <span class="mono text-xs text-gold border border-gold-dim px-3 py-1.5 rounded-sm tracking-wide hover:bg-gold hover:text-navy transition-all cursor-default">
+              {tag}
+            </span>
+                    ))}
+                </div>
+            </div>
+
+            <!-- Card -->
+            <div class="sticky top-24" data-aos="fade-left" data-aos-delay="200">
+                <div class="bg-navy-light border border-gold-dim rounded p-6">
+                    <div class="text-4xl mb-4">☕</div>
+                    <h3 class="text-cream font-semibold mb-4" class="font-display">
+                        Stack principal
+                    </h3>
+                    <ul class="flex flex-col gap-0">
+                        {stack.map(item => (
+                                <li class="mono text-sm text-gray py-2.5 border-b border-gold-dim last:border-0 hover:text-cream transition-colors">
+                                    {item}
+                                </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+</style>

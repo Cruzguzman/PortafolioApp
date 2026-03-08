@@ -1,0 +1,223 @@
+---
+// src/components/Hero.astro
+const nombre      = "Tu Nombre";
+const titulo      = "Java & Spring Developer";
+const descripcion = "Arquitecto de soluciones backend robustas con Java y Spring Framework. Especializado en microservicios, APIs REST y sistemas empresariales de alto rendimiento.";
+---
+
+<section id="inicio" class="relative min-h-screen flex flex-col justify-center px-6 pt-24 pb-16 max-w-5xl mx-auto">
+
+    <!-- Background grid -->
+    <div class="fixed inset-0 -z-10 grid-bg pointer-events-none"></div>
+
+    <!-- Glow -->
+    <div class="fixed top-1/4 right-10 w-96 h-96 -z-10 rounded-full pointer-events-none glow-gold"></div>
+
+    <!-- Canvas de partículas -->
+    <canvas id="particlesCanvas" class="fixed inset-0 -z-10 pointer-events-none"></canvas>
+
+    <!-- Content -->
+    <div class="max-w-2xl" data-aos="fade-up">
+
+        <!-- Eyebrow -->
+        <p class="mono text-xs tracking-widest text-gold uppercase flex items-center gap-2 mb-6">
+            <span class="pulse-dot w-2 h-2 rounded-full bg-gold inline-block"></span>
+            Disponible para proyectos
+        </p>
+
+        <!-- Title -->
+        <h1 class="mb-6 flex flex-col gap-1">
+      <span class="hero-name text-5xl md:text-7xl font-bold text-cream leading-none tracking-tight">
+        {nombre}
+      </span>
+            <span class="hero-titulo text-2xl md:text-3xl text-gold italic">
+        {titulo}
+      </span>
+        </h1>
+
+        <!-- Description -->
+        <p class="text-gray text-lg leading-relaxed mb-10 max-w-xl" data-aos="fade-up" data-aos-delay="100">
+            {descripcion}
+        </p>
+
+        <!-- CTA buttons -->
+        <div class="flex flex-wrap gap-4 mb-16" data-aos="fade-up" data-aos-delay="200">
+            <a href="#proyectos" class="btn btn-primary">Ver proyectos</a>
+            <a href="#contacto"  class="btn btn-outline">Contactar</a>
+        </div>
+
+        <!-- Stats -->
+        <div class="flex flex-wrap items-center gap-8" data-aos="fade-up" data-aos-delay="300">
+            <div class="flex flex-col gap-1">
+                <span class="hero-stat">5+</span>
+                <span class="mono text-xs text-gray tracking-wide">Años de experiencia</span>
+            </div>
+            <div class="w-px h-10 bg-gold-dim hidden sm:block"></div>
+            <div class="flex flex-col gap-1">
+                <span class="hero-stat">20+</span>
+                <span class="mono text-xs text-gray tracking-wide">Proyectos entregados</span>
+            </div>
+            <div class="w-px h-10 bg-gold-dim hidden sm:block"></div>
+            <div class="flex flex-col gap-1">
+                <span class="hero-stat">10+</span>
+                <span class="mono text-xs text-gray tracking-wide">Clientes satisfechos</span>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<style>
+    .hero-name,
+    .hero-titulo,
+    .hero-stat   { font-family: var(--font-display); }
+    .hero-stat   { font-size: 1.875rem; font-weight: 700; color: var(--color-cream); }
+    .glow-gold   { background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); }
+    .bg-gold-dim { background-color: var(--color-gold-dim); }
+</style>
+
+<script is:inline>
+    (function () {
+        const canvas = document.getElementById('particlesCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        // Config
+        const CONFIG = {
+            count:        80,       // número de partículas
+            minRadius:    1,        // tamaño mínimo
+            maxRadius:    3,        // tamaño máximo
+            minSpeed:     0.15,     // velocidad mínima
+            maxSpeed:     0.45,     // velocidad máxima
+            minOpacity:   0.08,     // opacidad mínima
+            maxOpacity:   0.55,     // opacidad máxima
+            colors: [
+                'rgba(201,168,76,OPACITY)',   // dorado principal
+                'rgba(226,196,122,OPACITY)',  // dorado claro
+                'rgba(255,220,100,OPACITY)',  // dorado brillante
+                'rgba(180,140,50,OPACITY)',   // dorado oscuro
+            ],
+            connectionDist: 120,    // distancia para trazar líneas entre partículas
+            mouseRadius:    140,    // radio de influencia del mouse
+        };
+
+        let W, H, particles, mouse = { x: null, y: null };
+
+        // Resize
+        function resize() {
+            W = canvas.width  = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+        }
+
+        // Clase partícula
+        class Particle {
+            constructor() { this.reset(true); }
+
+            reset(initial = false) {
+                this.x  = Math.random() * W;
+                this.y  = initial ? Math.random() * H : H + 10;
+                this.r  = CONFIG.minRadius + Math.random() * (CONFIG.maxRadius - CONFIG.minRadius);
+                const speed = CONFIG.minSpeed + Math.random() * (CONFIG.maxSpeed - CONFIG.minSpeed);
+                const angle = Math.random() * Math.PI * 2;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed - 0.05; // ligero drift hacia arriba
+                this.opacity   = CONFIG.minOpacity + Math.random() * (CONFIG.maxOpacity - CONFIG.minOpacity);
+                this.baseOpacity = this.opacity;
+                this.colorTpl  = CONFIG.colors[Math.floor(Math.random() * CONFIG.colors.length)];
+                this.pulse     = Math.random() * Math.PI * 2; // fase de pulso
+                this.pulseSpeed= 0.01 + Math.random() * 0.02;
+            }
+
+            color(op) {
+                return this.colorTpl.replace('OPACITY', op.toFixed(2));
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.pulse += this.pulseSpeed;
+
+                // Pulso de opacidad
+                this.opacity = this.baseOpacity + Math.sin(this.pulse) * 0.1;
+
+                // Rebote horizontal
+                if (this.x < 0 || this.x > W) this.vx *= -1;
+
+                // Rebote vertical
+                if (this.y < 0 || this.y > H) this.vy *= -1;
+
+                // Influencia del mouse — alejarse suavemente
+                if (mouse.x !== null) {
+                    const dx = this.x - mouse.x;
+                    const dy = this.y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < CONFIG.mouseRadius) {
+                        const force = (CONFIG.mouseRadius - dist) / CONFIG.mouseRadius;
+                        this.x += (dx / dist) * force * 1.5;
+                        this.y += (dy / dist) * force * 1.5;
+                    }
+                }
+            }
+
+            draw() {
+                // Halo exterior
+                const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 3);
+                grad.addColorStop(0,   this.color(this.opacity));
+                grad.addColorStop(0.5, this.color(this.opacity * 0.4));
+                grad.addColorStop(1,   this.color(0));
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r * 3, 0, Math.PI * 2);
+                ctx.fillStyle = grad;
+                ctx.fill();
+
+                // Núcleo
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fillStyle = this.color(Math.min(this.opacity * 1.8, 1));
+                ctx.fill();
+            }
+        }
+
+        // Dibujar líneas entre partículas cercanas
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx   = particles[i].x - particles[j].x;
+                    const dy   = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < CONFIG.connectionDist) {
+                        const alpha = (1 - dist / CONFIG.connectionDist) * 0.12;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(201,168,76,${alpha.toFixed(3)})`;
+                        ctx.lineWidth   = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Init
+        function init() {
+            resize();
+            particles = Array.from({ length: CONFIG.count }, () => new Particle());
+        }
+
+        // Loop
+        function loop() {
+            ctx.clearRect(0, 0, W, H);
+            drawConnections();
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(loop);
+        }
+
+        // Eventos
+        window.addEventListener('resize', () => { resize(); });
+        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+
+        init();
+        loop();
+    })();
+</script>

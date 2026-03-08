@@ -1,0 +1,62 @@
+---
+// src/components/Navbar.astro
+const nombre = "Miguel Ángel Cruz Guzmán";
+---
+
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 py-5 transition-all duration-300">
+    <div class="max-w-5xl mx-auto px-6 flex items-center justify-between">
+
+        <!-- Logo -->
+        <a href="#inicio" class="font-display text-2xl font-bold text-cream">
+            {nombre.split(" ")[0]}<span class="text-gold">.</span>
+        </a>
+
+        <!-- Desktop links -->
+        <ul id="navLinks" class="hidden md:flex items-center gap-10">
+            <li><a href="#sobre-mi"    class="mono text-sm text-gray hover:text-cream transition-colors tracking-wide">Sobre mí</a></li>
+            <li><a href="#skills"      class="mono text-sm text-gray hover:text-cream transition-colors tracking-wide">Skills</a></li>
+            <li><a href="#proyectos"   class="mono text-sm text-gray hover:text-cream transition-colors tracking-wide">Proyectos</a></li>
+            <li><a href="#experiencia" class="mono text-sm text-gray hover:text-cream transition-colors tracking-wide">Experiencia</a></li>
+            <li><a href="#certificaciones" class="mono text-sm text-gray hover:text-cream transition-colors tracking-wide">Cursos</a></li>
+            <li>
+                <a href="#contacto" class="mono text-sm text-gold border border-gold px-4 py-2 rounded hover:bg-gold hover:text-navy transition-all tracking-wide">
+                    Contacto
+                </a>
+            </li>
+            <!-- Theme toggle -->
+            <li>
+                <button id="themeToggle" class="theme-toggle text-lg w-9 h-9 flex items-center justify-center rounded border border-gold-dim hover:border-gold transition-colors">
+                    <span id="themeIcon">🌙</span>
+                </button>
+            </li>
+        </ul>
+
+        <!-- Mobile toggle -->
+        <div class="flex items-center gap-3 md:hidden">
+            <button id="themeToggle" class="theme-toggle text-base">
+                <span id="themeIcon">🌙</span>
+            </button>
+            <button id="navToggle" class="flex flex-col gap-1.5 p-1" aria-label="Menú">
+                <span class="block w-6 h-0.5 bg-cream transition-all"></span>
+                <span class="block w-6 h-0.5 bg-cream transition-all"></span>
+                <span class="block w-6 h-0.5 bg-cream transition-all"></span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Mobile menu -->
+    <ul id="navLinks" class="hidden md:hidden flex-col gap-6 px-6 pt-6 pb-8 bg-navy border-t border-gold-dim">
+        <li><a href="#sobre-mi"    class="mono text-sm text-gray hover:text-gold transition-colors">Sobre mí</a></li>
+        <li><a href="#skills"      class="mono text-sm text-gray hover:text-gold transition-colors">Skills</a></li>
+        <li><a href="#proyectos"   class="mono text-sm text-gray hover:text-gold transition-colors">Proyectos</a></li>
+        <li><a href="#experiencia" class="mono text-sm text-gray hover:text-gold transition-colors">Experiencia</a></li>
+        <li><a href="#certificaciones" class="mono text-sm text-gray hover:text-gold transition-colors">Cursos</a></li>
+        <li><a href="#contacto"    class="mono text-sm text-gold">Contacto</a></li>
+    </ul>
+</nav>
+
+<style>
+    .font-display { font-family: 'Playfair Display', serif; }
+    .border-gold-dim { border-color: rgba(201,168,76,0.2); }
+</style>

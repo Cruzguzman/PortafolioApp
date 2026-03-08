@@ -1,0 +1,242 @@
+---
+// src/components/Experiencia.astro
+
+const experiencias = [
+    {
+        periodo:    "2022 — Presente",
+        actual:     true,
+        anioInicio: 2022,
+        cargo:      "Senior Java Developer",
+        empresa:    "Empresa S.A. de C.V.",
+        descripcion:"Liderazgo técnico en desarrollo de APIs REST con Spring Boot. Diseño e implementación de arquitecturas de microservicios. Mentoría a desarrolladores junior.",
+        tags:       ["Spring Boot", "AWS", "Docker"],
+    },
+    {
+        periodo:    "2020 — 2022",
+        actual:     false,
+        anioInicio: null,
+        cargo:      "Java Backend Developer",
+        empresa:    "Tech Solutions",
+        descripcion:"Desarrollo de sistemas de gestión empresarial. Integración con servicios de terceros via APIs. Optimización de consultas y mejora de rendimiento en bases de datos.",
+        tags:       ["Java", "Hibernate", "MySQL"],
+    },
+    {
+        periodo:    "2018 — 2020",
+        actual:     false,
+        anioInicio: null,
+        cargo:      "Junior Developer",
+        empresa:    "Startup Digital",
+        descripcion:"Desarrollo de aplicaciones web con Java EE. Implementación de módulos de autenticación y autorización. Participación en ciclos ágiles con Scrum.",
+        tags:       ["Java EE", "JSP", "Scrum"],
+    },
+];
+---
+
+<section id="experiencia" class="py-24 px-6 bg-navy">
+    <div class="max-w-5xl mx-auto">
+
+        <p class="section-label" data-aos="fade-up">04 — Experiencia</p>
+        <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">
+            Trayectoria <em>profesional</em>
+        </h2>
+
+        <div class="exp-grid">
+            {experiencias.map((exp, i) => (
+                    <article class="exp-card" data-aos="fade-up" data-aos-delay={i * 100}>
+
+                        <!-- Periodo + badge -->
+                        <div class="exp-periodo">
+                            <span class="exp-fecha">{exp.periodo}</span>
+                            {exp.actual && (
+                                    <span class="badge-actual">
+                <span class="badge-dot"></span>
+                Actual · <span class="años-count" data-inicio={exp.anioInicio}>0</span> años
+              </span>
+                            )}
+                        </div>
+
+                        <!-- Cargo -->
+                        <h3 class="exp-cargo">{exp.cargo}</h3>
+
+                        <!-- Empresa -->
+                        <p class="exp-empresa">{exp.empresa}</p>
+
+                        <!-- Descripción -->
+                        <p class="exp-desc">{exp.descripcion}</p>
+
+                        <!-- Tags -->
+                        <div class="exp-tags">
+                            {exp.tags.map(tag => (
+                                    <span class="exp-tag">{tag}</span>
+                            ))}
+                        </div>
+
+                    </article>
+            ))}
+        </div>
+
+    </div>
+</section>
+
+<style>
+    em { color: #C9A84C; font-style: italic; font-family: 'Playfair Display', serif; }
+
+    .section-label {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        color: #C9A84C;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 600;
+        color: #F5F0E8;
+        margin-bottom: 3rem;
+        line-height: 1.2;
+    }
+
+    /* Grid */
+    .exp-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+    }
+
+    /* Card */
+    .exp-card {
+        background: #111827;
+        border: 1px solid rgba(201,168,76,0.15);
+        border-radius: 6px;
+        padding: 1.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .exp-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(201,168,76,0.35);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+
+    /* Accent line top */
+    .exp-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 2px;
+        background: #C9A84C;
+        opacity: 0.7;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.35s ease;
+    }
+    .exp-card:hover::before { transform: scaleX(1); }
+
+    /* Periodo */
+    .exp-periodo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    .exp-fecha {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        color: #9CA3AF;
+    }
+
+    /* Badge actual */
+    .badge-actual {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.62rem;
+        color: #C9A84C;
+        background: rgba(201,168,76,0.1);
+        border: 1px solid rgba(201,168,76,0.25);
+        padding: 0.15rem 0.55rem;
+        border-radius: 99px;
+    }
+    .badge-dot {
+        width: 5px; height: 5px;
+        border-radius: 50%;
+        background: #C9A84C;
+        animation: blink 2s infinite;
+        flex-shrink: 0;
+    }
+    @keyframes blink {
+        0%,100% { opacity:1; }
+        50%      { opacity:0.3; }
+    }
+
+    /* Cargo */
+    .exp-cargo {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: #F5F0E8;
+        line-height: 1.3;
+    }
+
+    /* Empresa */
+    .exp-empresa {
+        font-size: 0.82rem;
+        color: #C9A84C;
+        opacity: 0.85;
+    }
+
+    /* Descripción */
+    .exp-desc {
+        font-size: 0.82rem;
+        color: #9CA3AF;
+        line-height: 1.75;
+        flex: 1;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(201,168,76,0.1);
+    }
+
+    /* Tags */
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .exp-tag {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        color: #6B7280;
+        border: 1px solid rgba(201,168,76,0.15);
+        padding: 0.2rem 0.6rem;
+        border-radius: 3px;
+        transition: color 0.2s, border-color 0.2s;
+        cursor: default;
+    }
+    .exp-tag:hover { color: #C9A84C; border-color: rgba(201,168,76,0.4); }
+
+    /* Responsive */
+    @media (max-width: 1024px) { .exp-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px)  { .exp-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.años-count').forEach(el => {
+            const inicio  = parseInt(el.dataset.inicio, 10);
+            const ahora   = new Date().getFullYear();
+            const meses   = new Date().getMonth();
+            const target  = ahora - inicio + (meses >= 6 ? 1 : 0);
+            let current   = 0;
+            const step    = target / 40;
+            const timer   = setInterval(() => {
+                current += step;
+                if (current >= target) { current = target; clearInterval(timer); }
+                el.textContent = Math.floor(current);
+            }, 40);
+        });
+    });
+</script>

@@ -1,0 +1,59 @@
+---
+// src/components/Contacto.astro
+
+const contactos = [
+    { icono: "✉",  label: "Email",    valor: "tu@email.com",              href: "mailto:tu@email.com" },
+    { icono: "in", label: "LinkedIn", valor: "linkedin.com/in/tuperfil",   href: "https://linkedin.com/in/tuperfil" },
+    { icono: "GH", label: "GitHub",   valor: "github.com/tuusuario",       href: "https://github.com/tuusuario" },
+];
+---
+
+<section id="contacto" class="py-24 px-6 bg-navy-mid">
+    <div class="max-w-5xl mx-auto">
+
+        <p class="mono text-xs tracking-widest text-gold uppercase mb-4" data-aos="fade-up">05 — Contacto</p>
+
+        <div class="max-w-xl">
+            <h2 class="text-4xl md:text-5xl font-semibold text-cream mb-4 leading-tight"
+                style="font-family:'Playfair Display',serif" data-aos="fade-up" data-aos-delay="100">
+                ¿Tienes un proyecto?<br /><em>Hablemos.</em>
+            </h2>
+
+            <p class="text-gray text-base leading-relaxed mb-10" data-aos="fade-up" data-aos-delay="150">
+                Estoy disponible para proyectos freelance, posiciones full-time o simplemente para una conversación técnica.
+            </p>
+
+            <!-- Contact links -->
+            <div class="flex flex-col gap-3 mb-10">
+                {contactos.map((c, i) => (
+                        <a href={c.href} target="_blank"
+                           class="flex items-center gap-4 border border-gold-dim rounded p-4 hover:border-gold group transition-all"
+                           data-aos="fade-up" data-aos-delay={200 + i * 80}>
+            <span class="mono text-xs text-gold w-10 h-10 flex items-center justify-center bg-navy-light rounded group-hover:bg-gold group-hover:text-navy transition-all flex-shrink-0">
+              {c.icono}
+            </span>
+                            <div class="flex flex-col gap-0.5">
+                                <span class="mono text-xs text-gray uppercase tracking-widest">{c.label}</span>
+                                <span class="text-cream text-sm group-hover:text-gold transition-colors">{c.valor}</span>
+                            </div>
+                            <span class="ml-auto text-gray group-hover:text-gold transition-colors text-lg">→</span>
+                        </a>
+                ))}
+            </div>
+
+            <!-- CTA -->
+            <a href="mailto:tu@email.com"
+               class="inline-flex items-center gap-3 bg-gold text-navy font-medium px-8 py-4 rounded hover:bg-gold-light transition-all hover:-translate-y-0.5 tracking-wide"
+               data-aos="fade-up" data-aos-delay="450">
+                Enviar mensaje →
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    .border-gold-dim { border-color: rgba(201,168,76,0.15); }
+    .bg-gold-light   { background-color: #E2C47A; }
+    .text-navy       { color: #0A0F1E; }
+</style>

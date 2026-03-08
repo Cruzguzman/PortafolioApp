@@ -1,0 +1,286 @@
+---
+// src/components/Skills.astro
+
+const grupos = [
+    {
+        titulo:   "Backend",
+        badge:    "BE",
+        icono:    "☕",
+        color:    "#C9A84C",
+        skills: [
+            { nombre: "Java 17 / 21",     nivel: "Expert",    pct: 95 },
+            { nombre: "Spring Boot",       nivel: "Expert",    pct: 95 },
+            { nombre: "Spring Security",   nivel: "Avanzado",  pct: 80 },
+            { nombre: "Hibernate / JPA",   nivel: "Avanzado",  pct: 80 },
+            { nombre: "REST / GraphQL",    nivel: "Avanzado",  pct: 80 },
+        ],
+    },
+    {
+        titulo:   "Base de datos",
+        badge:    "DB",
+        icono:    "🗄️",
+        color:    "#818CF8",
+        skills: [
+            { nombre: "PostgreSQL",  nivel: "Avanzado",   pct: 80 },
+            { nombre: "MySQL",       nivel: "Avanzado",   pct: 80 },
+            { nombre: "MongoDB",     nivel: "Intermedio", pct: 60 },
+            { nombre: "Redis",       nivel: "Intermedio", pct: 60 },
+        ],
+    },
+    {
+        titulo:   "DevOps & Cloud",
+        badge:    "OPS",
+        icono:    "☁️",
+        color:    "#38BDF8",
+        skills: [
+            { nombre: "Docker",               nivel: "Avanzado",   pct: 80 },
+            { nombre: "Kubernetes",           nivel: "Intermedio", pct: 60 },
+            { nombre: "AWS",                  nivel: "Intermedio", pct: 60 },
+            { nombre: "CI/CD GitHub Actions", nivel: "Avanzado",   pct: 80 },
+        ],
+    },
+    {
+        titulo:   "Frontend & Otros",
+        badge:    "FE",
+        icono:    "⚛️",
+        color:    "#34D399",
+        skills: [
+            { nombre: "JavaScript / TypeScript", nivel: "Intermedio", pct: 60 },
+            { nombre: "React",                   nivel: "Intermedio", pct: 60 },
+            { nombre: "Git / GitHub",            nivel: "Expert",     pct: 95 },
+            { nombre: "JUnit / Mockito",         nivel: "Avanzado",   pct: 80 },
+        ],
+    },
+];
+
+const badges = ["Maven","Gradle","Swagger / OpenAPI","Kafka","Spring Cloud","Scrum / Agile","IntelliJ IDEA","Postman"];
+
+function nivelClass(nivel) {
+    if (nivel === "Expert")   return "expert";
+    if (nivel === "Avanzado") return "advanced";
+    return "mid";
+}
+---
+
+<section id="skills" class="py-24 px-6 bg-navy-mid">
+    <div class="max-w-5xl mx-auto">
+
+        <p class="mono text-xs tracking-widest text-gold uppercase mb-4"
+           data-aos="fade-up">
+            02 — Tecnologías
+        </p>
+        <h2 class="section-title text-4xl md:text-5xl font-semibold text-cream mb-12 leading-tight"
+            data-aos="fade-up" data-aos-delay="100">
+            Stack & <em>Herramientas</em>
+        </h2>
+
+        <!-- Cards grid -->
+        <div class="skills-grid">
+            {grupos.map((grupo, i) => (
+                    <article
+                            class="skill-card"
+                            data-aos="fade-up"
+                            data-aos-delay={i * 80}
+                            style={`--accent: ${grupo.color}`}
+                    >
+                        <!-- Accent line top -->
+                        <div class="skill-line"></div>
+
+                        <!-- Glow -->
+                        <div class="skill-glow"></div>
+
+                        <!-- Header -->
+                        <div class="skill-header">
+                            <span class="skill-icon">{grupo.icono}</span>
+                            <span class="skill-badge">{grupo.badge}</span>
+                        </div>
+
+                        <!-- Titulo -->
+                        <h3 class="skill-titulo">{grupo.titulo}</h3>
+
+                        <!-- Lista de skills -->
+                        <div class="skill-list">
+                            {grupo.skills.map(skill => (
+                                    <div class="skill-item">
+                                        <span class="skill-name">{skill.nombre}</span>
+                                        <div class="skill-bar-wrap">
+                                            <div class="skill-bar" style={`width:${skill.pct}%`}></div>
+                                        </div>
+                                        <span class={`skill-level ${nivelClass(skill.nivel)}`}>
+                  {skill.nivel}
+                </span>
+                                    </div>
+                            ))}
+                        </div>
+
+                    </article>
+            ))}
+        </div>
+
+        <!-- Badges -->
+        <div class="badges-row" data-aos="fade-up" data-aos-delay="350">
+            {badges.map(badge => (
+                    <span class="badge-pill">{badge}</span>
+            ))}
+        </div>
+
+    </div>
+</section>
+
+<style>
+    em { color: #C9A84C; font-style: italic; font-family: 'Playfair Display', serif; }
+    .section-title { font-family: 'Playfair Display', serif; }
+
+    /* Grid */
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Card */
+    .skill-card {
+        background: #111827;
+        border: 1px solid rgba(201,168,76,0.12);
+        border-radius: 6px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .skill-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(201,168,76,0.35);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    /* Accent line */
+    .skill-line {
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 2px;
+        background: var(--accent);
+        opacity: 0.7;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.35s ease;
+    }
+    .skill-card:hover .skill-line { transform: scaleX(1); }
+
+    /* Glow */
+    .skill-glow {
+        position: absolute;
+        top: -40px; right: -40px;
+        width: 120px; height: 120px;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--accent), transparent 70%);
+        opacity: 0.05;
+        transition: opacity 0.3s;
+        pointer-events: none;
+    }
+    .skill-card:hover .skill-glow { opacity: 0.12; }
+
+    /* Header */
+    .skill-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .skill-icon { font-size: 1.75rem; line-height: 1; }
+    .skill-badge {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        color: var(--accent);
+        background: color-mix(in srgb, var(--accent) 12%, transparent);
+        border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+        padding: 0.25rem 0.6rem;
+        border-radius: 3px;
+    }
+
+    /* Titulo */
+    .skill-titulo {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #F5F0E8;
+    }
+
+    /* Lista */
+    .skill-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
+    .skill-item {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.4rem 0.5rem;
+        border-radius: 3px;
+        transition: background 0.2s;
+    }
+    .skill-item:hover { background: rgba(255,255,255,0.03); }
+
+    .skill-name {
+        font-size: 0.82rem;
+        color: #9CA3AF;
+        flex: 1;
+        transition: color 0.2s;
+    }
+    .skill-item:hover .skill-name { color: #F5F0E8; }
+
+    .skill-bar-wrap {
+        width: 55px; height: 3px;
+        background: rgba(255,255,255,0.06);
+        border-radius: 99px;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+    .skill-bar {
+        height: 100%;
+        border-radius: 99px;
+        background: var(--accent);
+        opacity: 0.7;
+        transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .skill-level {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.08em;
+        padding: 0.18rem 0.5rem;
+        border-radius: 99px;
+        white-space: nowrap;
+    }
+    .expert   { background: rgba(201,168,76,0.12); color: #C9A84C; }
+    .advanced { background: rgba(99,102,241,0.12);  color: #818CF8; }
+    .mid      { background: rgba(255,255,255,0.05); color: #6B7280; }
+
+    /* Badges */
+    .badges-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+    .badge-pill {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.7rem;
+        color: #6B7280;
+        border: 1px solid rgba(201,168,76,0.15);
+        padding: 0.4rem 1rem;
+        border-radius: 99px;
+        letter-spacing: 0.05em;
+        transition: all 0.2s;
+        cursor: default;
+    }
+    .badge-pill:hover { border-color: #C9A84C; color: #C9A84C; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+        .skills-grid { grid-template-columns: 1fr; }
+    }
+</style>
